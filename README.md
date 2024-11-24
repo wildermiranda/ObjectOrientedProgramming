@@ -10,7 +10,7 @@ Programação estruturada:
 
 - `Comando 1`
 - `Comando 2`
-- `Comando 3
+- `Comando 3`
 - `Comando 4`
 
 ```
@@ -60,8 +60,18 @@ public class Main {
 }
 ```
 
+
+Abstração
+- Destaca os aspectos essenciais de uma entidade e oculta os detalhes desnecessários.
+- Abstração é o processo de focar nos processos principais e não na implementação real.
+- A abstração é útil para construir sistemas complexos, separando as funcionalidades em partes menores.
+- A implementação concreta deve ser feita apenas quando o problema a ser resolvido estiver totalmente compreendido.
+
+
 Encapsulamento
 - Protege os dados internos de uma classe, permitindo acesso controlado por meio de métodos públicos (getters e setters)
+- O motorista não precisa saber como o motor funciona, mas apenas interagir com o carro por meio de ações simples, como ligar, desligar e acelerar. O motor é uma parte interna do carro, e seus detalhes devem ser "escondidos" do motorista.
+- É o ato de ocultar detalhes da implementação e tornar público apenas o necessário para a classe realizar as tarefas para as quais foi criada.
 
 ```java
 class Person {
@@ -105,8 +115,10 @@ public class Main {
 }
 ```
 
+
 Herança
 - Permite que um classe (subclasse) herde atributos e métodos de outra classe (superclasse).
+- Classes abstratas (abstract)construídas para servir de base para outras classes. Não podem ser instanciadas diretamente.
 
 Imagine um sistema para gerenciar diferentes tipos de funcionários em uma empresa. Há um **funcionário genérico**, mas alguns têm características específicas, como gerentes e desenvolvedores.
 
@@ -164,6 +176,68 @@ public class Main {
 	}
 }
 ```
+
+Sistema de pagamento onde diferentes métodos de pagamento (como boleto e cartão) herdam de uma classe abstrata.
+
+```java
+abstract class Payment {
+	protected double value;
+
+	public Payment(double value) {
+		this.value = value;
+	}
+
+	// Método abstratos (sem implementação)
+	public abstract void makePayment();
+
+	public void displayValue() {
+		System.out.println("Valor do pagamento: R$ " + value);
+	}
+}
+
+// Subclasse Boleto
+class PaymentSlip extends Payment {
+	public PaymentSlip(double value) {
+		super(value);
+	}
+
+	@Override
+	public void makePayment() {
+		System.out.println("Pagamento de R$ " + value + " realizado via Boleto.");
+	}
+}
+
+// Subclasse Cartão
+
+class Card extends Payment {
+	public Card(double value) {
+		super(value);
+	}
+
+	@Override
+	public void makePayment() {
+		System.out.println("Pagamento de R$ " + value + " realizado via Cartão.");
+	}
+}
+
+
+public class Main {
+	public static void main(String[] args) {
+		// Usando abstração para ocultar detalhes específicos
+		Payment payment = new PaymentSlip(500.00);
+		Payment payment2 = new Card(200.00);
+
+		payment.displayValue();
+		payment.makePayment();
+		
+		System.out.println("-");
+		
+		payment2.displayValue();
+		payment2.makePayment();
+	}
+}
+```
+
 
 Polimorfismo
 - Um método ou objeto pode se comportar de maneiras diferentes dependendo do contexto.
@@ -234,70 +308,6 @@ public class Main {
 			System.out.println("-");
 			payment.processPayment();
 		}
-	}
-}
-```
-
-Abstração
-- Destaca os aspectos essenciais de uma entidade e oculta os detalhes desnecessários.
-
-Sistema de pagamento onde diferentes métodos de pagamento (como boleto e cartão) herdam de uma classe abstrata.
-
-```java
-abstract class Payment {
-	protected double value;
-
-	public Payment(double value) {
-		this.value = value;
-	}
-
-	// Método abstratos (sem implementação)
-	public abstract void makePayment();
-
-	public void displayValue() {
-		System.out.println("Valor do pagamento: R$ " + value);
-	}
-}
-
-// Subclasse Boleto
-class PaymentSlip extends Payment {
-	public PaymentSlip(double value) {
-		super(value);
-	}
-
-	@Override
-	public void makePayment() {
-		System.out.println("Pagamento de R$ " + value + " realizado via Boleto.");
-	}
-}
-
-// Subclasse Cartão
-
-class Card extends Payment {
-	public Card(double value) {
-		super(value);
-	}
-
-	@Override
-	public void makePayment() {
-		System.out.println("Pagamento de R$ " + value + " realizado via Cartão.");
-	}
-}
-
-
-public class Main {
-	public static void main(String[] args) {
-		// Usando abstração para ocultar detalhes específicos
-		Payment payment = new PaymentSlip(500.00);
-		Payment payment2 = new Card(200.00);
-
-		payment.displayValue();
-		payment.makePayment();
-		
-		System.out.println("-");
-		
-		payment2.displayValue();
-		payment2.makePayment();
 	}
 }
 ```
